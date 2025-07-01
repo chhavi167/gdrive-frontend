@@ -65,7 +65,7 @@ const handleLogout = () => {
     if (!file) return alert('Please select a file');
     const formData = new FormData();
     formData.append('file', file);
-    const res = await fetch(`${app_url}/files/upload`, {
+    const res = await fetch(`${app_url}/upload`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${getToken()}` },
       body: formData,
