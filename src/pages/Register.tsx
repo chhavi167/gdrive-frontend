@@ -1,6 +1,8 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 
+const api_url = 'https://gdrive-backend-17wp.onrender.com/api';
+
 const Register = () => {
   const navigate = useNavigate({ from: '/register' });
   const [email, setEmail] = useState('');
@@ -8,7 +10,7 @@ const Register = () => {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch('http://localhost:3000/api/auth/register', {
+    const res = await fetch(`${api_url}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),

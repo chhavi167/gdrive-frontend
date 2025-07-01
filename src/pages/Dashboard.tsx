@@ -3,7 +3,8 @@ import { getToken } from '../api/auth';
 import { useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
 
-const app_url = 'http://localhost:3000/api/files';
+// const app_url = 'http://localhost:3000/api/files';
+const api_url = 'https://gdrive-backend-17wp.onrender.com/api/files';
 
 interface FileType {
   id: string;
@@ -17,7 +18,7 @@ interface FileType {
 
 // Fetch owned files
 const fetchFiles = async (): Promise<FileType[]> => {
-  const res = await fetch(`${app_url}/my-files`, {
+  const res = await fetch(`${api_url}/my-files`, {
     headers: { Authorization: `Bearer ${getToken()}` },
   });
   if (!res.ok) throw new Error('Failed to load files');
@@ -26,7 +27,7 @@ const fetchFiles = async (): Promise<FileType[]> => {
 
 // Fetch shared-with-me files
 const fetchSharedFiles = async (): Promise<FileType[]> => {
-  const res = await fetch(`${app_url}/shared-with-me`, {
+  const res = await fetch(`${api_url}/shared-with-me`, {
     headers: { Authorization: `Bearer ${getToken()}` },
   });
   if (!res.ok) throw new Error('Failed to load shared files');
@@ -65,7 +66,7 @@ const handleLogout = () => {
     if (!file) return alert('Please select a file');
     const formData = new FormData();
     formData.append('file', file);
-    const res = await fetch(`${app_url}/upload`, {
+    const res = await fetch(`${api_url}/upload`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${getToken()}` },
       body: formData,
@@ -81,7 +82,7 @@ const handleLogout = () => {
 
   // Delete
   const deleteFile = async (id: string) => {
-    const res = await fetch(`${app_url}/delete/${id}`, {
+    const res = await fetch(`${api_url}/delete/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${getToken()}` },
     });
@@ -98,7 +99,7 @@ const handleLogout = () => {
 
   // Rename
   const renameFile = async ({ id, newName }: { id: string; newName: string }) => {
-    const res = await fetch(`${app_url}/rename/${id}`, {
+    const res = await fetch(`${api_url}/rename/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -119,7 +120,7 @@ const handleLogout = () => {
 
   // Share
   const shareFile = async ({ id, userEmails }: { id: string; userEmails: string[] }) => {
-    const res = await fetch(`${app_url}/share/${id}`, {
+    const res = await fetch(`${api_url}/share/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
